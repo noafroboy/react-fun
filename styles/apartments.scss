@@ -1,0 +1,74 @@
+#root {
+  font-family: sans-serif;
+
+  .apartments {
+    $padding: 10px;
+    max-width: 900px;
+    margin: 0 auto;
+
+    background: rgb(239, 239, 239);
+    padding: $padding;
+
+    .apartment-card {
+      margin-bottom: $padding;
+      // https://css-tricks.com/almanac/properties/f/flex/
+      display: flex;
+      height: 200px;
+
+      &.selected {
+        background-color: rgb(215, 215, 215);
+      }
+
+      .image-preview {
+        flex: 2;
+        overflow: hidden;
+      }
+      .details {
+        flex: 3;
+        padding: $padding;
+        position: relative;
+        height: 100%;
+
+        a {
+          color: #333;
+          font-size: 1.5em;
+          font-weight: bold;
+          text-decoration: underline;
+          padding-bottom: 20px;
+        }
+
+        .description {
+          font-size: 0.8em;
+          color: #999;
+        }
+
+        .price-group {
+          position: absolute;
+          right: $padding;
+          bottom: $padding;
+
+          .price-label {
+            font-size: 0.7em;
+            color: rgb(237, 161, 39);
+          }
+
+          .price-from {
+            display: inline-block;
+            padding-right: 5px;
+          }
+
+          .price-unit {
+            text-align: right;
+          }
+
+          .price {
+            display: inline-block;
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #e99e1a;
+          }
+        }
+      }
+    }
+  }
+}
