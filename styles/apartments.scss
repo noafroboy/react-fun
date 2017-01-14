@@ -1,23 +1,42 @@
 #root {
   font-family: sans-serif;
+  $padding: 10px;
+  max-width: 900px;
+  margin: 0 auto;
+  background: rgb(239, 239, 239);
+  padding: $padding;
+
+  .search-results {
+    .search-title {
+      color: #66696a;
+      font-size: 1.5em;
+    }
+
+    .sorting-controls {
+      float: right;
+
+      > div {
+        float: right;
+        padding: 3px 7px;
+
+        &.active {
+          background-color: rgb(241, 167, 39);
+        }
+      }
+    }
+
+    .clear {
+      clear: both;
+      padding-bottom: $padding;
+    }
+  }
 
   .apartments {
-    $padding: 10px;
-    max-width: 900px;
-    margin: 0 auto;
-
-    background: rgb(239, 239, 239);
-    padding: $padding;
-
     .apartment-card {
       margin-bottom: $padding;
       // https://css-tricks.com/almanac/properties/f/flex/
       display: flex;
       height: 200px;
-
-      &.selected {
-        background-color: rgb(215, 215, 215);
-      }
 
       .image-preview {
         flex: 2;
@@ -25,16 +44,32 @@
       }
       .details {
         flex: 3;
+        background-color: white;
         padding: $padding;
         position: relative;
         height: 100%;
 
-        a {
-          color: #333;
-          font-size: 1.5em;
-          font-weight: bold;
-          text-decoration: underline;
-          padding-bottom: 20px;
+        &:hover {
+          background-color: rgb(215, 215, 215);
+          .heading {
+            hr {
+              border-color: #888;
+            }
+          }
+        }
+
+        .heading {
+          a {
+            color: #333;
+            font-size: 1.5em;
+            font-weight: bold;
+            text-decoration: underline;
+          }
+
+          hr {
+            margin: 10px 0;
+            border-color: rgb(212, 212, 212);
+          }
         }
 
         .description {

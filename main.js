@@ -1,1 +1,1 @@
-import ApartmentCard from './index.jsx'
+import SearchResults from './index.jsx'

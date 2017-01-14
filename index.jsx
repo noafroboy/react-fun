@@ -9,12 +9,15 @@ console.log(apartments);
 class ApartmentCard extends React.Component {
   render() {
     return (
-      <div className={"apartment-card " + (this.props.selected ? "selected" : "")}>
+      <div className={"apartment-card"}>
         <div className="image-preview">
           <img src={"images/" + this.props.image} />
         </div>
         <div className="details">
-          <a href={"/apartment/" + this.props.id}>{this.props.name}</a>
+          <div className="heading">
+            <a href={"/apartment/" + this.props.id}>{this.props.name}</a>
+            <hr/>
+          </div>
           <div className="description">
             {this.props.description}
           </div>
@@ -24,7 +27,6 @@ class ApartmentCard extends React.Component {
             <div className="price-label price-unit">USD / Month</div>
           </div>
         </div>
-        {/*<h1>{this.props.name}</h1>*/}
       </div>
     )
   }
@@ -32,10 +34,9 @@ class ApartmentCard extends React.Component {
 
 class Apartments extends React.Component {
   render() {
-    var apartmentCards = _.map(apartments.apartments, function(apartment, index) {
+    var apartmentCards = _.map(this.props.apartments, function(apartment, index) {
       return (
         <ApartmentCard key={apartment.id}
-          selected={index == 0}
           id={apartment.id}
           name={apartment.name}
           image={apartment.image}
@@ -51,5 +52,50 @@ class Apartments extends React.Component {
     )
   }
 }
+
+class SearchResults extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      sortPopularity: true,
+      apartments: apartments.apartments
+    }
+  }
+
+  render() {
+    return (
+      <div className="search-results">
+        <div className="search-title">
+          Minneapolis, MN: {this.state.apartments.length} Apartments
+        </div>
+        <div className="sorting-controls">
+          <div onClick={this.handleSort.bind(this)} className={!this.state.sortPopularity && "active"} data-sort-type="price">Price</div>
+          <div onClick={this.handleSort.bind(this)} className={this.state.sortPopularity && "active"} data-sort-type="popularity">Popularity</div>
+        </div>
+        <div className="clear"></div>
+        <Apartments apartments={this.state.apartments}/>
+      </div>
+    )
+  }
+
+  handleSort(e) {
+    var me = this,
+        sortByPopularity = $(e.target).data('sort-type') == 'popularity',
+        sortedApartments = _.sortBy(this.state.apartments, function(apartment) {
+          if (sortByPopularity) {
+            return apartment.popularity;
+          } else {
+            return apartment.price;
+          }
+        });
+
+    if (sortByPopularity) {
+      this.setState({sortPopularity: true, apartments: sortedApartments});
+    } else {
+      this.setState({sortPopularity: false, apartments: sortedApartments});
+    }
+  }
+}
  
-ReactDOM.render(<Apartments/>, document.getElementById('root'));
+ReactDOM.render(<SearchResults/>, document.getElementById('root'));
